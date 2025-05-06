@@ -1,0 +1,33 @@
+name: echo_id
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: echo_id_nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+
+  frontend:
+    container_name: echo_id_frontend
+
+  backend:
+    container_name: echo_id_backend
+
+  audio_fingerprinting:
+    container_name: echo_id_audio_fingerprinting
+
+  database:
+    container_name: echo_id_database
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - "./db/.env.development"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
